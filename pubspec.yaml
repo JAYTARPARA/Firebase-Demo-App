@@ -1,0 +1,111 @@
+name: firebasedemo
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.3
+  font_awesome_flutter: ^8.8.1
+  country_code_picker: ^1.3.14
+  page_transition: ^1.1.5
+  flare_flutter: ^2.0.3
+  rect_getter: ^0.1.0
+  shared_preferences: ^0.5.7+3
+  email_validator: ^1.0.4
+  firebase_auth: ^0.16.0
+  google_sign_in: ^4.5.1
+  # flutter_facebook_login: ^3.0.0
+  rflutter_alert: ^1.0.3
+  pin_code_fields: ^3.0.1
+  cloud_firestore: ^0.13.6
+  firebase_storage: ^3.1.6
+  image_picker: ^0.6.6+4
+  circular_profile_avatar: ^1.0.6
+  flutter_spinkit: ^4.1.2+1
+  foldable_sidebar: ^1.0.0
+  unicorndial: ^1.1.5
+  dynamic_theme: ^1.0.1
+  flutter_native_splash: ^0.1.9
+  flutter_launcher_icons: ^0.7.5
+  firebase_messaging: ^6.0.16
+  firebase_in_app_messaging: ^0.1.2
+  flutter_switch: ^0.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  android: true
+  ios: true
+
+flutter_native_splash:
+  image: assets/images/splash.png
+  color: "#949494"
+  android_disable_fullscreen: true
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+   - assets/images/
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+  - family: Overpass
+    fonts:
+      - asset: assets/fonts/overpass_bold.otf
+  - family: OverpassRegular
+    fonts:
+      - asset: assets/fonts/overpass_regular.otf
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

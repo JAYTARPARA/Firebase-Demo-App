@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Firebase Demo</string>
+
+    <!-- Replace "000000000000" with your Facebook App ID here. -->
+    <string name="facebook_app_id">834006987092266</string>
+    <!-- <string name="facebook_app_id">950110338385665</string> -->
+
+    <!--
+      Replace "000000000000" with your Facebook App ID here.
+      **NOTE**: The scheme needs to start with `fb` and then your ID.
+    -->
+    <string name="fb_login_protocol_scheme">fb834006987092266</string>
+    <!-- <string name="fb_login_protocol_scheme">fb950110338385665</string> -->
+</resources>

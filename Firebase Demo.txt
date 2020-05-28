@@ -1,0 +1,49 @@
+app.firebasedemo.jaytarpara
+
+1. Social Signup and Signin - DONE
+2. Signin with OTP - DONE
+3. Profile (Name, Mobile, Email, Password, Profile Pic) - DONE
+4. All users list - DONE
+5. Detail page of user - DONE
+6. Theme page - DONE
+7. Splash and Icon
+8. Notification
+
+GOOGLE
+Project public-facing name: project-21015328593
+Web client ID: 21015328593-leotluhon6njjgg10gfkda1np9ecl3q7.apps.googleusercontent.com
+Web client secret: R53KIEjrdID-75pw-yq2YNZp
+
+https://i.ibb.co/ZxrhKMw/dummy.jpg
+https://www.atafireandflood.com/wp-content/uploads/2019/06/placeholder-profile-sq.jpg
+
+
+FACEBOOK
+App ID: 834006987092266
+App Secret: 31c9179d93a381790ef49ac47b6bf90c
+
+keytool -exportcert -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore" | "C:\Openssl\bin\openssl" sha1 -binary | "C:\Openssl\bin\openssl" base64
+
+keytool -list -v -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore"
+
+SHA1: 06:7E:08:95:48:02:CE:D3:6C:DC:AD:3C:74:02:D0:77:D9:9C:98:53
+SHA256: BD:49:15:85:A0:C8:27:19:9F:B8:56:6D:94:60:E7:02:B8:E8:56:3B:F2:77:47:F6:95:BC:A2:65:F3:7C:08:0C
+		 
+defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.fl.app.bhuminarrowfab"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        multiDexEnabled true
+    }
+	
+	compile 'com.android.support:multidex:1.0.3'
+	
+	app/build.gridle for dex issue
+	
+949494
+
+flutter pub run flutter_launcher_icons:main
+flutter pub pub run flutter_native_splash:create
