@@ -6,8 +6,8 @@ app.firebasedemo.jaytarpara
 4. All users list - DONE
 5. Detail page of user - DONE
 6. Theme page - DONE
-7. Splash and Icon
-8. Notification
+7. Splash and Icon - DONE
+8. Notification - DONE
 
 GOOGLE
 Project public-facing name: project-21015328593
