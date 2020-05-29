@@ -168,13 +168,13 @@ class _AllUsersState extends State<AllUsers> {
         ),
       ),
       body: GestureDetector(
-        onHorizontalDragStart: (details) {
-          setState(() {
-            if (drawerStatus == FSBStatus.FSB_CLOSE) {
-              drawerStatus = FSBStatus.FSB_OPEN;
-            }
-          });
-        },
+        // onHorizontalDragStart: (details) {
+        //   setState(() {
+        //     if (drawerStatus == FSBStatus.FSB_CLOSE) {
+        //       drawerStatus = FSBStatus.FSB_OPEN;
+        //     }
+        //   });
+        // },
         onTap: () {
           setState(() {
             if (drawerStatus == FSBStatus.FSB_OPEN) {

@@ -1,6 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebasedemo/screens/profile.dart';
+import 'package:firebasedemo/screens/main_profile.dart';
 import 'package:firebasedemo/theme/theming.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -99,8 +99,13 @@ class _MobileOtpState extends State<MobileOtp> {
   }
 
   verifyOTP() async {
+    showSnackBar(
+      "Please wait... authenticating your mobile number...",
+      Colors.green,
+    );
     setState(() {
       _enabled = false;
+      loading = true;
     });
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
@@ -109,6 +114,7 @@ class _MobileOtpState extends State<MobileOtp> {
       );
       final AuthResult user = await auth.signInWithCredential(credential);
       final FirebaseUser currentUser = await auth.currentUser();
+      print(user);
       // assert(user.uid == currentUser.uid);
       print(currentUser.uid);
       if (currentUser.uid != "") {
@@ -116,7 +122,7 @@ class _MobileOtpState extends State<MobileOtp> {
         Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => Profile(),
+            builder: (context) => MainProfile(),
           ),
         );
       }

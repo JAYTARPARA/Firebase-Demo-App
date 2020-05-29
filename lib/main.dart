@@ -3,10 +3,9 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:firebasedemo/common/common.dart';
 import 'package:firebasedemo/screens/all_users.dart';
 import 'package:firebasedemo/screens/home.dart';
+import 'package:firebasedemo/screens/main_profile.dart';
 import 'package:firebasedemo/screens/mobile_otp.dart';
-import 'package:firebasedemo/screens/profile.dart';
 import 'package:firebasedemo/screens/splash_screen.dart';
-import 'package:firebasedemo/screens/theme_setting.dart';
 import 'package:firebasedemo/theme/theming.dart';
 import 'package:flutter/material.dart';
 
@@ -110,9 +109,8 @@ class _MyAppState extends State<MyApp> {
           routes: <String, WidgetBuilder>{
             '/splash': (BuildContext context) => new SplashScreen(),
             '/home': (BuildContext context) => new Home(),
-            '/profile': (BuildContext context) => new Profile(),
+            '/profile': (BuildContext context) => new MainProfile(),
             '/mobile-otp': (BuildContext context) => new MobileOtp(),
-            '/theme-setting': (BuildContext context) => new ThemeSetting(),
             '/all-users': (BuildContext context) => new AllUsers(),
           },
         );

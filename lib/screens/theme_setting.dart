@@ -1,32 +1,33 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/common/common.dart';
-import 'package:firebasedemo/sidebar/sidebar.dart';
+import 'package:firebasedemo/screens/splash_screen.dart';
 import 'package:firebasedemo/theme/theming.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ThemeSetting extends StatefulWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey;
+  ThemeSetting(this._scaffoldKey);
+
   @override
   _ThemeSettingState createState() => _ThemeSettingState();
 }
 
 class _ThemeSettingState extends State<ThemeSetting> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   FirebaseAuth auth = FirebaseAuth.instance;
   Firestore firestore = Firestore.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   var userid = "";
-  var username = "";
   var currentThemeColor = "";
   FSBStatus drawerStatus = FSBStatus.FSB_CLOSE;
-  String _uploadedFileURL = "https://i.ibb.co/ZxrhKMw/dummy.jpg";
   bool userPrivacy = false;
   bool loadPrivacy = true;
 
@@ -46,7 +47,7 @@ class _ThemeSettingState extends State<ThemeSetting> {
     msg,
     color,
   ) {
-    _scaffoldKey.currentState.showSnackBar(
+    widget._scaffoldKey.currentState.showSnackBar(
       new SnackBar(
         content: new Text(
           msg,
@@ -73,19 +74,7 @@ class _ThemeSettingState extends State<ThemeSetting> {
       setState(() {
         userPrivacy = userData["privacy"];
         loadPrivacy = false;
-        if (userData['profilepic'] != null) {
-          _uploadedFileURL = userData['profilepic'];
-        }
       });
-      if (userData['name'] != null) {
-        setState(() {
-          username = userData['name'];
-        });
-      } else {
-        setState(() {
-          username = "Your Name";
-        });
-      }
     });
   }
 
@@ -119,7 +108,22 @@ class _ThemeSettingState extends State<ThemeSetting> {
     });
   }
 
-  Future<bool> _onWillPop() {
+  Future deleteAccount() async {
+    firestore.collection("users").document(userid).delete();
+    await Common().writeData("method", "");
+    if (await googleSignIn.isSignedIn()) {
+      await googleSignIn.signOut();
+    }
+    await auth.signOut();
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => SplashScreen(),
+      ),
+    );
+  }
+
+  Future<bool> _confirmDeleteAccount() {
     return Alert(
       context: context,
       style: AlertStyle(
@@ -135,8 +139,9 @@ class _ThemeSettingState extends State<ThemeSetting> {
         ),
       ),
       type: AlertType.none,
-      title: "EXIT APP",
-      desc: "Are you sure you want to exit?",
+      title: "WARNING!",
+      desc:
+          "Are you sure you want to reset your account? \r\n Your all data will be deleted.",
       buttons: [
         DialogButton(
           color: Colors.black87,
@@ -159,7 +164,9 @@ class _ThemeSettingState extends State<ThemeSetting> {
               fontSize: 20,
             ),
           ),
-          onPressed: () => exit(0),
+          onPressed: () async {
+            deleteAccount();
+          },
           width: 120,
         ),
       ],
@@ -168,385 +175,389 @@ class _ThemeSettingState extends State<ThemeSetting> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(
-          "Settings",
+    return ListView(
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+      ),
+      children: <Widget>[
+        SizedBox(
+          height: 20.0,
+        ),
+        Text(
+          "Choose your theme",
           style: TextStyle(
             fontSize: 18.0,
-            fontWeight: FontWeight.w800,
             color: Theming().lightTextColor,
           ),
         ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: drawerStatus == FSBStatus.FSB_OPEN
-              ? FaIcon(
-                  FontAwesomeIcons.times,
-                  color: Theming().lightTextColor,
-                )
-              : FaIcon(
-                  FontAwesomeIcons.bars,
-                  color: Theming().lightTextColor,
-                ),
-          onPressed: () {
-            setState(() {
-              drawerStatus = drawerStatus == FSBStatus.FSB_OPEN
-                  ? FSBStatus.FSB_CLOSE
-                  : FSBStatus.FSB_OPEN;
-            });
-          },
+        SizedBox(
+          height: 10.0,
         ),
-      ),
-      body: GestureDetector(
-        onHorizontalDragStart: (details) {
-          setState(() {
-            if (drawerStatus == FSBStatus.FSB_CLOSE) {
-              drawerStatus = FSBStatus.FSB_OPEN;
-            }
-          });
-        },
-        onTap: () {
-          setState(() {
-            if (drawerStatus == FSBStatus.FSB_OPEN) {
-              drawerStatus = FSBStatus.FSB_CLOSE;
-            }
-          });
-        },
-        child: WillPopScope(
-          onWillPop: _onWillPop,
-          child: FoldableSidebarBuilder(
-            drawerBackgroundColor: Theming().scaffoldColor,
-            status: drawerStatus,
-            drawer: Sidebar(
-              closeDrawer: () {
+        Wrap(
+          spacing: 22.0,
+          runSpacing: 12.0,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "blue",
+                );
                 setState(() {
-                  drawerStatus = FSBStatus.FSB_CLOSE;
+                  currentThemeColor = "blue";
                 });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.blue,
+                    accentColor: Colors.blue,
+                    primarySwatch: Colors.blue,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
               },
-              profileImage: _uploadedFileURL,
-              name: username,
-              page: "theme_setting",
-            ),
-            screenContents: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.0,
+              child: ColorPicker(
+                visibility: currentThemeColor == "blue" ? true : false,
+                color: Colors.blue,
+                name: "blue",
               ),
-              children: <Widget>[
-                SizedBox(
-                  height: 20.0,
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "brown",
+                );
+                setState(() {
+                  currentThemeColor = "brown";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.brown,
+                    accentColor: Colors.brown,
+                    primarySwatch: Colors.brown,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "brown" ? true : false,
+                color: Colors.brown,
+                name: "brown",
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "orange",
+                );
+                setState(() {
+                  currentThemeColor = "orange";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.orange,
+                    accentColor: Colors.orange,
+                    primarySwatch: Colors.orange,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "orange" ? true : false,
+                color: Colors.orange,
+                name: "orange",
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "yellow",
+                );
+                setState(() {
+                  currentThemeColor = "yellow";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.yellow,
+                    accentColor: Colors.yellow,
+                    primarySwatch: Colors.yellow,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "yellow" ? true : false,
+                color: Colors.yellow,
+                name: "yellow",
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "green",
+                );
+                setState(() {
+                  currentThemeColor = "green";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.green,
+                    accentColor: Colors.green,
+                    primarySwatch: Colors.green,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "green" ? true : false,
+                color: Colors.green,
+                name: "green",
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "purple",
+                );
+                setState(() {
+                  currentThemeColor = "purple";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.purple,
+                    accentColor: Colors.purple,
+                    primarySwatch: Colors.purple,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "purple" ? true : false,
+                color: Colors.purple,
+                name: "purple",
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "pink",
+                );
+                setState(() {
+                  currentThemeColor = "pink";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.pink,
+                    accentColor: Colors.pink,
+                    primarySwatch: Colors.pink,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "pink" ? true : false,
+                color: Colors.pink,
+                name: "pink",
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Common().writeData(
+                  "theme",
+                  "red",
+                );
+                setState(() {
+                  currentThemeColor = "red";
+                });
+                DynamicTheme.of(context).setThemeData(
+                  ThemeData(
+                    primaryColor: Colors.red,
+                    accentColor: Colors.red,
+                    primarySwatch: Colors.red,
+                    brightness: Brightness.dark,
+                    scaffoldBackgroundColor: Theming().scaffoldColor,
+                    appBarTheme: AppBarTheme(
+                      elevation: 10.0,
+                    ),
+                    fontFamily: 'Overpass',
+                  ),
+                );
+              },
+              child: ColorPicker(
+                visibility: currentThemeColor == "red" ? true : false,
+                color: Colors.red,
+                name: "red",
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Divider(
+          height: 1,
+          color: Theming().dividerColor,
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Text(
+          "Your privacy",
+          style: TextStyle(
+            fontSize: 18.0,
+            color: Theming().lightTextColor,
+          ),
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              "Hide your data from other users",
+            ),
+            loadPrivacy
+                ? SpinKitWave(
+                    color: Colors.white,
+                    size: 30.0,
+                  )
+                : FlutterSwitch(
+                    activeColor: Theme.of(context).primaryColor,
+                    value: userPrivacy,
+                    borderRadius: 30.0,
+                    showOnOff: true,
+                    onToggle: (val) {
+                      setState(() {
+                        userPrivacy = val;
+                      });
+                      updateUserPrivacy();
+                    },
+                  ),
+          ],
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Divider(
+          height: 1,
+          color: Theming().dividerColor,
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        GestureDetector(
+          onTap: () {
+            _confirmDeleteAccount();
+          },
+          child: Container(
+            height: MediaQuery.of(context).size.height / 3,
+            alignment: Alignment.bottomCenter,
+            child: Card(
+              elevation: 10.0,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: Colors.white70,
+                  width: 1,
                 ),
-                Text(
-                  "Choose your theme",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Theming().lightTextColor,
+                borderRadius: BorderRadius.circular(
+                  10.0,
+                ),
+              ),
+              margin: EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 8.0,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(
+                    10.0,
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Wrap(
-                  spacing: 22.0,
-                  runSpacing: 12.0,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "blue",
-                        );
-                        setState(() {
-                          currentThemeColor = "blue";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.blue,
-                            accentColor: Colors.blue,
-                            primarySwatch: Colors.blue,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility: currentThemeColor == "blue" ? true : false,
-                        color: Colors.blue,
-                        name: "blue",
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 1.0,
+                  ),
+                  leading: Container(
+                    height: 25.0,
+                    padding: EdgeInsets.only(
+                      right: 12.0,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          width: 1.0,
+                          color: Colors.white70,
+                        ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "brown",
-                        );
-                        setState(() {
-                          currentThemeColor = "brown";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.brown,
-                            accentColor: Colors.brown,
-                            primarySwatch: Colors.brown,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility: currentThemeColor == "brown" ? true : false,
-                        color: Colors.brown,
-                        name: "brown",
+                    child: SizedBox(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Center(
+                        child: FaIcon(
+                          FontAwesomeIcons.trashAlt,
+                          color: Theming().lightTextColor,
+                        ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "orange",
-                        );
-                        setState(() {
-                          currentThemeColor = "orange";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.orange,
-                            accentColor: Colors.orange,
-                            primarySwatch: Colors.orange,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility:
-                            currentThemeColor == "orange" ? true : false,
-                        color: Colors.orange,
-                        name: "orange",
-                      ),
+                  ),
+                  title: Text(
+                    "RESET MY ACCOUNT",
+                    style: TextStyle(
+                      color: Theming().lightTextColor,
+                      fontWeight: FontWeight.bold,
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "yellow",
-                        );
-                        setState(() {
-                          currentThemeColor = "yellow";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.yellow,
-                            accentColor: Colors.yellow,
-                            primarySwatch: Colors.yellow,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility:
-                            currentThemeColor == "yellow" ? true : false,
-                        color: Colors.yellow,
-                        name: "yellow",
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "green",
-                        );
-                        setState(() {
-                          currentThemeColor = "green";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.green,
-                            accentColor: Colors.green,
-                            primarySwatch: Colors.green,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility: currentThemeColor == "green" ? true : false,
-                        color: Colors.green,
-                        name: "green",
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "purple",
-                        );
-                        setState(() {
-                          currentThemeColor = "purple";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.purple,
-                            accentColor: Colors.purple,
-                            primarySwatch: Colors.purple,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility:
-                            currentThemeColor == "purple" ? true : false,
-                        color: Colors.purple,
-                        name: "purple",
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "pink",
-                        );
-                        setState(() {
-                          currentThemeColor = "pink";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.pink,
-                            accentColor: Colors.pink,
-                            primarySwatch: Colors.pink,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility: currentThemeColor == "pink" ? true : false,
-                        color: Colors.pink,
-                        name: "pink",
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await Common().writeData(
-                          "theme",
-                          "red",
-                        );
-                        setState(() {
-                          currentThemeColor = "red";
-                        });
-                        DynamicTheme.of(context).setThemeData(
-                          ThemeData(
-                            primaryColor: Colors.red,
-                            accentColor: Colors.red,
-                            primarySwatch: Colors.red,
-                            brightness: Brightness.dark,
-                            scaffoldBackgroundColor: Theming().scaffoldColor,
-                            appBarTheme: AppBarTheme(
-                              elevation: 10.0,
-                            ),
-                            fontFamily: 'Overpass',
-                          ),
-                        );
-                      },
-                      child: ColorPicker(
-                        visibility: currentThemeColor == "red" ? true : false,
-                        color: Colors.red,
-                        name: "red",
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  "Your privacy",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Theming().lightTextColor,
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Hide your data from other users",
-                    ),
-                    loadPrivacy
-                        ? SpinKitWave(
-                            color: Colors.white,
-                            size: 30.0,
-                          )
-                        : FlutterSwitch(
-                            activeColor: Theme.of(context).primaryColor,
-                            value: userPrivacy,
-                            borderRadius: 30.0,
-                            showOnOff: true,
-                            onToggle: (val) {
-                              setState(() {
-                                userPrivacy = val;
-                              });
-                              updateUserPrivacy();
-                            },
-                          ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey,
-                ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

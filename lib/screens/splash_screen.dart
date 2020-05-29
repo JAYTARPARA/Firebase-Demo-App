@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/screens/home.dart';
-import 'package:firebasedemo/screens/profile.dart';
+import 'package:firebasedemo/screens/main_profile.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         PageTransition(
           type: PageTransitionType.rightToLeftWithFade,
-          child: loggedin ? Profile() : Home(),
+          child: loggedin ? MainProfile() : Home(),
         ),
       );
     });

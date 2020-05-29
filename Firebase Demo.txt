@@ -47,3 +47,7 @@ defaultConfig {
 
 flutter pub run flutter_launcher_icons:main
 flutter pub pub run flutter_native_splash:create
+
+keytool -genkey -v -keystore firebase-demo.jks -alias firebasedemo -keyalg RSA -keysize 2048 -validity 10000
+
+flutter build apk --split-per-abi

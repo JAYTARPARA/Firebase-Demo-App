@@ -1,10 +1,9 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/common/common.dart';
-import 'package:firebasedemo/screens/profile.dart';
+import 'package:firebasedemo/screens/main_profile.dart';
 import 'package:firebasedemo/screens/all_users.dart';
 import 'package:firebasedemo/screens/splash_screen.dart';
-import 'package:firebasedemo/screens/theme_setting.dart';
 import 'package:firebasedemo/theme/theming.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -102,7 +101,7 @@ class _SidebarState extends State<Sidebar> {
           Container(
               width: double.infinity,
               height: 200.0,
-              color: Colors.black45,
+              color: Colors.black54,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -140,7 +139,7 @@ class _SidebarState extends State<Sidebar> {
                 Navigator.push(
                   context,
                   new MaterialPageRoute(
-                    builder: (context) => Profile(),
+                    builder: (context) => MainProfile(),
                   ),
                 );
               }
@@ -160,7 +159,7 @@ class _SidebarState extends State<Sidebar> {
           ),
           Divider(
             height: 1,
-            color: Colors.grey,
+            color: Theming().dividerColor,
           ),
           ListTile(
             onTap: () {
@@ -188,35 +187,7 @@ class _SidebarState extends State<Sidebar> {
           ),
           Divider(
             height: 1,
-            color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              if (widget.page != "theme_setting") {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => ThemeSetting(),
-                  ),
-                );
-              }
-            },
-            leading: Icon(
-              Icons.color_lens,
-            ),
-            title: Text(
-              "Settings",
-            ),
-            trailing: Visibility(
-              visible: widget.page == "theme_setting" ? true : false,
-              child: Icon(
-                Icons.check_circle_outline,
-              ),
-            ),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
+            color: Theming().dividerColor,
           ),
           ListTile(
             onTap: () {
@@ -231,7 +202,7 @@ class _SidebarState extends State<Sidebar> {
           ),
           Divider(
             height: 1,
-            color: Colors.grey,
+            color: Theming().dividerColor,
           ),
         ],
       ),

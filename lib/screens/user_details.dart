@@ -148,7 +148,7 @@ class _UserDetailsState extends State<UserDetails> {
                         ),
                         Divider(
                           height: 1,
-                          color: Colors.grey,
+                          color: Theming().dividerColor,
                         ),
                         ListTile(
                           leading: FaIcon(
@@ -161,7 +161,7 @@ class _UserDetailsState extends State<UserDetails> {
                         ),
                         Divider(
                           height: 1,
-                          color: Colors.grey,
+                          color: Theming().dividerColor,
                         ),
                         ListTile(
                           leading: FaIcon(
@@ -174,7 +174,7 @@ class _UserDetailsState extends State<UserDetails> {
                         ),
                         Divider(
                           height: 1,
-                          color: Colors.grey,
+                          color: Theming().dividerColor,
                         ),
                         ListTile(
                           leading: FaIcon(
@@ -187,7 +187,7 @@ class _UserDetailsState extends State<UserDetails> {
                         ),
                         Divider(
                           height: 1,
-                          color: Colors.grey,
+                          color: Theming().dividerColor,
                         ),
                       ],
                     ),

@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebasedemo/screens/profile.dart';
+import 'package:firebasedemo/screens/main_profile.dart';
 import 'package:firebasedemo/theme/theming.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
         Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => Profile(),
+            builder: (context) => MainProfile(),
           ),
         );
       }
@@ -129,7 +129,7 @@ class _RegisterState extends State<Register> {
         Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => Profile(),
+            builder: (context) => MainProfile(),
           ),
         );
       }
@@ -146,7 +146,7 @@ class _RegisterState extends State<Register> {
     Navigator.push(
       context,
       new MaterialPageRoute(
-        builder: (context) => Profile(),
+        builder: (context) => MainProfile(),
       ),
     );
   }
@@ -363,7 +363,7 @@ class _RegisterState extends State<Register> {
             height: 20.0,
           ),
           Divider(
-            color: Theming().lightTextColor,
+            color: Theming().dividerColor,
           ),
           SizedBox(
             height: 20.0,
