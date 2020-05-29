@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "21015328593-hv9oeuci43gn1vstvv26ibloblvdn25a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.firebasedemo.jaytarpara",
+            "certificate_hash": "1b19bcb9b14691d56428aef0732e200ee83d52be"
+          }
+        },
+        {
           "client_id": "21015328593-gsut1f4oe127c85bsbpeh1gv7e8o3s7u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

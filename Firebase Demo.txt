@@ -26,6 +26,8 @@ keytool -exportcert -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.andr
 
 keytool -list -v -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore"
 
+keytool -list -v -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore"
+
 SHA1: 06:7E:08:95:48:02:CE:D3:6C:DC:AD:3C:74:02:D0:77:D9:9C:98:53
 SHA256: BD:49:15:85:A0:C8:27:19:9F:B8:56:6D:94:60:E7:02:B8:E8:56:3B:F2:77:47:F6:95:BC:A2:65:F3:7C:08:0C
 		 
@@ -49,5 +51,10 @@ flutter pub run flutter_launcher_icons:main
 flutter pub pub run flutter_native_splash:create
 
 keytool -genkey -v -keystore firebase-demo.jks -alias firebasedemo -keyalg RSA -keysize 2048 -validity 10000
+
+keytool -list -v -keystore "C:\Projects\Flutter Projects\firebasedemo\android\app\firebase-demo.jks" -alias firebasedemo
+
+SHA1: 1B:19:BC:B9:B1:46:91:D5:64:28:AE:F0:73:2E:20:0E:E8:3D:52:BE
+SHA256: DB:07:6E:C1:15:81:79:7E:BE:04:05:C9:80:95:36:43:5A:8D:B1:13:D5:8F:21:87:4B:C2:4C:B3:C9:E0:7D:D9
 
 flutter build apk --split-per-abi
