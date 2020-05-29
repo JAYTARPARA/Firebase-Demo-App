@@ -26,7 +26,7 @@ class _ThemeSettingState extends State<ThemeSetting> {
   Firestore firestore = Firestore.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   var userid = "";
-  var currentThemeColor = "";
+  var currentThemeColor = "blue";
   FSBStatus drawerStatus = FSBStatus.FSB_CLOSE;
   bool userPrivacy = false;
   bool loadPrivacy = true;
@@ -80,7 +80,7 @@ class _ThemeSettingState extends State<ThemeSetting> {
 
   Future getTheme() async {
     var setColor = await Common().readData("theme");
-    if (setColor == null) {
+    if (setColor == null || setColor == "") {
       setState(() {
         currentThemeColor = "blue";
       });
