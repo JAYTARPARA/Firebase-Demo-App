@@ -17,14 +17,14 @@
 <div align="left">
     <h3>Features available in the application:</h3>    
     <br/>
-    ⚫ Register/Login with Google account, Mobile OTP and normal email
-    ⚫ Save user information in firestore
-    ⚫ Upload profile picture, crop picture functionality and store in firestore
-    ⚫ Theme customization
-    ⚫ See other users available in the application
-    ⚫ User privacy
+    ➼ Register/Login with Google account, Mobile OTP and normal email \r\n
+    ➼ Save user information in firestore
+    ➼ Upload profile picture, crop picture functionality and store in firestore
+    ➼ Theme customization
+    ➼ See other users available in the application
+    ➼ User privacy
         - If user don't want to show their personal data such as email and mobile number, they can choose this from privacy setting
-    ⚫ Push notification and in-app messaging with firebase
+    ➼ Push notification and in-app messaging with firebase
 </div>
  
 <br/>
