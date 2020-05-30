@@ -1,4 +1,5 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/common/common.dart';
 import 'package:firebasedemo/screens/main_profile.dart';
@@ -28,7 +29,48 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  Firestore firestore = Firestore.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  var userid = "";
+  var username = "Your Name";
+  String _uploadedFileURL = "https://i.ibb.co/ZxrhKMw/dummy.jpg";
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.page == "profile") {
+      getUser();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future getUser() async {
+    final FirebaseUser currentUser = await auth.currentUser();
+
+    firestore.collection("users").document(currentUser.uid).get().then((value) {
+      var userData = value.data;
+      if (userData != null) {
+        if (userData['profilepic'] != null) {
+          if (this.mounted) {
+            setState(() {
+              _uploadedFileURL = userData['profilepic'];
+            });
+          }
+        }
+        if (userData['name'] != null) {
+          if (this.mounted) {
+            setState(() {
+              username = userData['name'];
+            });
+          }
+        }
+      }
+    });
+  }
 
   Future<bool> _logout() {
     return Alert(
@@ -107,7 +149,9 @@ class _SidebarState extends State<Sidebar> {
                 children: <Widget>[
                   Center(
                     child: CircularProfileAvatar(
-                      widget.profileImage,
+                      widget.page == "profile"
+                          ? _uploadedFileURL
+                          : widget.profileImage,
                       radius: 60,
                       placeHolder: (context, url) => SpinKitWave(
                         color: Colors.white,
@@ -126,7 +170,7 @@ class _SidebarState extends State<Sidebar> {
                     height: 10,
                   ),
                   Text(
-                    widget.name,
+                    widget.page == "profile" ? username : widget.name,
                     style: TextStyle(
                       fontSize: 16.0,
                     ),

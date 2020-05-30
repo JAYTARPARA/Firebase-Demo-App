@@ -1,16 +1,61 @@
-# firebasedemo
+# Firebase Demo Application
 
-A new Flutter project.
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+<a href="https://github.com/Solido/awesome-flutter">
+   <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
+</a>
 
-## Getting Started
+<div align="center">
+    <img src="assets/images/icon.png" width=200> 
+</div>
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<h4 align="center">
+ 📱 Firebase Demo Application - Firebase starter app made with flutter 📷
+</h4>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<div align="left">
+    <h3>Features available in the application:</h3>    
+    <br/>
+    ⚫ Register/Login with Google account, Mobile OTP and normal email
+    ⚫ Save user information in firestore
+    ⚫ Upload profile picture, crop picture functionality and store in firestore
+    ⚫ Theme customization
+    ⚫ See other users available in the application
+    ⚫ User privacy
+        - If user don't want to show their personal data such as email and mobile number, they can choose this from privacy setting
+    ⚫ Push notification and in-app messaging with firebase
+</div>
+ 
+<br/>
+<br/> 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
+<a href="https://play.google.com/store/apps/details?id=app.firebasedemo.jaytarpara">
+ <img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png' width="230">
+</a>
+ 
+
+<div style="text-align: center">
+	<table>
+		<tr>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/1.png" width="600"/></td>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/2.png" width="610"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/3.png" width="600"/></td>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/4.png" width="610"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/5.png" width="610"/></td>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/6.png" width="610"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/7.png" width="610"/></td>
+			<td style="text-align: center"><img src="firebasedemo/mockup/vertical/8.png" width="610"/></td>
+		</tr>
+	</table>
+</div>
+
+For help getting started with Flutter, view   
+[online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.

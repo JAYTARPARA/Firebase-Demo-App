@@ -53,6 +53,7 @@ dependencies:
   firebase_messaging: ^6.0.16
   firebase_in_app_messaging: ^0.1.2
   flutter_switch: ^0.1.0
+  image_cropper: ^1.2.2
 
 dev_dependencies:
   flutter_test:

@@ -3,11 +3,12 @@ app.firebasedemo.jaytarpara
 1. Social Signup and Signin - DONE
 2. Signin with OTP - DONE
 3. Profile (Name, Mobile, Email, Password, Profile Pic) - DONE
-4. All users list - DONE
-5. Detail page of user - DONE
-6. Theme page - DONE
-7. Splash and Icon - DONE
-8. Notification - DONE
+4. Crop profile image - DONE
+5. All users list - DONE
+6. Detail page of user - DONE
+7. Theme page - DONE
+8. Splash and Icon - DONE
+9. Notification - DONE
 
 GOOGLE
 Project public-facing name: project-21015328593
@@ -23,8 +24,6 @@ App ID: 834006987092266
 App Secret: 31c9179d93a381790ef49ac47b6bf90c
 
 keytool -exportcert -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore" | "C:\Openssl\bin\openssl" sha1 -binary | "C:\Openssl\bin\openssl" base64
-
-keytool -list -v -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore"
 
 keytool -list -v -alias androiddebugkey -keystore "C:\Users\Jay Tarpara\.android\debug.keystore"
 

@@ -17,6 +17,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:unicorndial/unicorndial.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class Profile extends StatefulWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey;
@@ -219,12 +220,32 @@ class _ProfileState extends State<Profile> {
     }
     await ImagePicker.pickImage(source: source).then((image) {
       if (image != null) {
-        setState(() {
-          _image = image;
-        });
-        uploadFile();
+        _cropImage(image);
       }
     });
+  }
+
+  Future<Null> _cropImage(File image) async {
+    File croppedImage = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      maxWidth: 1080,
+      maxHeight: 1080,
+      cropStyle: CropStyle.circle,
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Image',
+        toolbarColor: Theme.of(context).primaryColor,
+        toolbarWidgetColor: Theming().lightTextColor,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: false,
+        statusBarColor: Theme.of(context).primaryColor,
+      ),
+    );
+    if (croppedImage != null) {
+      setState(() {
+        _image = croppedImage;
+      });
+      uploadFile();
+    }
   }
 
   Future uploadFile() async {

@@ -26,7 +26,7 @@ class _MainProfileState extends State<MainProfile>
   FSBStatus drawerStatus = FSBStatus.FSB_CLOSE;
   var userid = "";
   var username = "";
-  String _uploadedFileURL = "https://i.ibb.co/ZxrhKMw/dummy.jpg";
+  String uploadedFileURL = "https://i.ibb.co/ZxrhKMw/dummy.jpg";
 
   @override
   void initState() {
@@ -53,6 +53,11 @@ class _MainProfileState extends State<MainProfile>
           username = "Your Name";
         });
       } else {
+        if (userData['profilepic'] != null) {
+          setState(() {
+            uploadedFileURL = userData['profilepic'];
+          });
+        }
         if (userData['name'] != null) {
           setState(() {
             username = userData['name'];
@@ -181,7 +186,7 @@ class _MainProfileState extends State<MainProfile>
                 drawerStatus = FSBStatus.FSB_CLOSE;
               });
             },
-            profileImage: _uploadedFileURL,
+            profileImage: uploadedFileURL,
             name: username,
             page: "profile",
           ),
