@@ -17,8 +17,8 @@
 <div align="left">
     <h3>Features available in the application:</h3>    
     <br/>
-    ➼ Register/Login with Google account, Mobile OTP and normal email
-    ➼ Save user information in firestore
+    ➼ Register/Login with Google account, Mobile OTP and normal email \
+    ➼ Save user information in firestore \
     ➼ Upload profile picture, crop picture functionality and store in firestore	
     ➼ Theme customization	
     ➼ See other users available in the application	
