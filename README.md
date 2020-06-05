@@ -36,7 +36,6 @@
 </div>
  
 <br/>
-<br/>
 
 <div align="left">
     <h3>Instruction steps to start:</h3>
@@ -55,6 +54,9 @@
 	👉🏼 Now you are ready to go with the Git Hub code
 	<br/>
 </div>
+
+<br/>
+<br/>
 
 <div style="text-align: center">
 	<table>
