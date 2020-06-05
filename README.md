@@ -39,7 +39,7 @@
 <br/>
 
 <div align="left">
-    <h3>Steps to start:</h3>
+    <h3>Instruction steps to start:</h3>
 	👉🏼 Create project from firebase console and download package json file to android/app folder
 	<br/>
 	👉🏼 Go to authentication tab (Sign-in method) and enable Email/password, Phone and Google method
