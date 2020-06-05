@@ -58,4 +58,29 @@ SHA256: DB:07:6E:C1:15:81:79:7E:BE:04:05:C9:80:95:36:43:5A:8D:B1:13:D5:8F:21:87:
 
 flutter build apk --split-per-abi
 
+https://app-privacy-policy-generator.firebaseapp.com/
+https://firebase-demo-applic.flycricket.io/privacy.html
+https://app.flycricket.com/app/c8f7f6adfe0b4f7e9fc0483600050369?created=1&privacy=1
+
 https://github.com/JAYTARPARA/Firebase-Demo-App/
+
+https://youtu.be/2wl6YnGpr28
+
+https://bit.ly/FirebaseDemoApp
+
+Hello Flutter Developers, I have created Firebase Demo Application (OPEN SOURCE)
+
+Application on google play store - https://bit.ly/FirebaseDemoApp
+
+Features available in the application
+👉🏼 Register/Login with Google account, Mobile OTP and normal email
+👉🏼 Save user information in firestore
+👉🏼 Upload profile picture, crop picture functionality and store in firestore
+👉🏼 Theme customization
+👉🏼 See other users available in the application
+👉🏼 User privacy ⁃ If user don't want to show their personal data such as email and mobile number, they can choose this from privacy setting
+👉🏼 Push notification and in-app messaging with firebase
+
+Here is the Github Link - https://github.com/JAYTARPARA/Firebase-Demo-App (Please show some love by starring the repo if you like the work)
+
+Here you can see the demo of the application - https://youtu.be/2wl6YnGpr28

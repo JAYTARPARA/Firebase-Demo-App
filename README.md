@@ -10,6 +10,13 @@
  📱 Firebase Demo Application - Firebase starter app made with ❤️ in Flutter 👨🏽‍💻
 </h4>
 
+<br/>
+<br/>
+
+<a href="https://play.google.com/store/apps/details?id=app.firebasedemo.jaytarpara">
+ <img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png' width="230">
+</a>
+
 <div align="left">
     <h3>Features available in the application:</h3>
     👉🏼 Register/Login with Google account, Mobile OTP and normal email
@@ -31,9 +38,23 @@
 <br/>
 <br/>
 
-<a href="https://play.google.com/store/apps/details?id=app.firebasedemo.jaytarpara">
- <img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png' width="230">
-</a>
+<div align="left">
+    <h3>Steps to start:</h3>
+	👉🏼 Create project from firebase console and download package json file to android/app folder
+	<br/>
+	👉🏼 Go to authentication tab (Sign-in method) and enable Email/password, Phone and Google method
+	<br/>
+	👉🏼 also you need Support Email and SHA-1 as well as SHA-256 in your app
+	<br/>
+	👉🏼 Please add SHA-1 as well as SHA-256 for release using jsk file otherwise google auth will not work when app will be in release mode
+	<br/>
+	👉🏼 Go to Database and enable it and create document named users
+	<br/>
+	👉🏼 Go to Storage and enable it
+	<br/>
+	👉🏼 Now you are ready to go with the Git Hub code
+	<br/>
+</div>
 
 <div style="text-align: center">
 	<table>
